@@ -1,0 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+/* ── DESIGN TOKENS ─────────────────────────────────────────── */
+:root {
+  --bg-dark:      #0a0a0a;
+  --bg-card:      #111111;
+  --bg-elevated:  #161616;
+  --gold:         #c49b5b;
+  --gold-light:   #d4b47a;
+  --gold-muted:   #8b6d3f;
+  --white:        #ffffff;
+  --off-white:    #f0ece4;
+  --gray:         #a1a1a1;
+  --gray-dark:    #4a4a4a;
+  --border-gold:  rgba(196,155,91,0.25);
+  --border-dark:  rgba(255,255,255,0.07);
+  --font-serif:   "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "Montserrat", sans-serif;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--white);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── GLOBAL UTILITIES ───────────────────────────────────────── */
+
+/* Gold label — small uppercase tracker above headings */
+.gold-label {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Ornamental thin gold line */
+.gold-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0.75rem auto;
+  opacity: 0.7;
+}
+.gold-rule-left { margin-left: 0; }
+
+/* Section title in Cormorant */
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.15;
+}
+
+/* Gold accent text */
+.text-gold { color: var(--gold); }
+.text-gray  { color: var(--gray); }
+
+/* Thin gold border */
+.border-gold { border: 1px solid var(--border-gold); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: var(--gold-muted); border-radius: 2px; }
+
+/* Focus */
+*:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── BUTTON STYLES ──────────────────────────────────────────── */
+.btn-gold {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.875rem 2.25rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.btn-gold:hover {
+  background: var(--gold);
+  color: #000000;
+}
+
+.btn-gold-filled {
+  display: inline-block;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: #000000;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.875rem 2.25rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.btn-gold-filled:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+/* ── CARDS ──────────────────────────────────────────────────── */
+.room-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.room-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+.room-card .room-img img {
+  transition: transform 0.6s ease;
+}
+.room-card:hover .room-img img {
+  transform: scale(1.04);
+}
+
+/* ── GALLERY ────────────────────────────────────────────────── */
+.gallery-item {
+  overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item img {
+  transition: transform 0.6s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.06);
+}
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem;
+}
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+/* ── AMENITY CARD ───────────────────────────────────────────── */
+.amenity-card {
+  border: 1px solid var(--border-gold);
+  padding: 2rem 1.5rem;
+  background: var(--bg-card);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.amenity-card:hover {
+  border-color: var(--gold);
+  background: var(--bg-elevated);
+}
+
+/* ── NAV ────────────────────────────────────────────────────── */
+.nav-link {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+  font-family: var(--font-sans);
+  position: relative;
+}
+.nav-link:hover,
+.nav-link.active { color: var(--gold); }
+
+/* ── FOOTER ─────────────────────────────────────────────────── */
+.footer-link {
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.2s ease;
+}
+.footer-link:hover { color: var(--gold); }
+.footer-subscribe-btn {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 0.65rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.footer-subscribe-btn:hover { background: var(--gold-light); }
+.footer-email-input {
+  flex: 1;
+  padding: 0.65rem 0.875rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-gold);
+  color: #fff;
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  outline: none;
+}
+.footer-email-input:focus { border-color: var(--gold); }
+.footer-email-input::placeholder { color: #555; }
+
+/* ── FORM INPUTS ─────────────────────────────────────────────── */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-gold);
+  color: #fff;
+  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.form-input::placeholder { color: #555; }
+.form-input:focus { border-color: var(--gold); }
+.form-label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+/* ── WHATSAPP ────────────────────────────────────────────────── */
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  background: #25D366;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem;
+  transition: background 0.2s ease, transform 0.15s ease;
+  font-family: var(--font-sans);
+  width: 100%;
+}
+.whatsapp-btn:hover {
+  background: #1ebe57;
+  transform: translateY(-2px);
+}
+
+/* ── FILTER PILLS ────────────────────────────────────────────── */
+.filter-pill {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border-gold);
+  background: transparent;
+  color: var(--gray);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+}
+.filter-pill:hover,
+.filter-pill.active {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── CONTACT INFO CARD ───────────────────────────────────────── */
+.info-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-gold);
+  background: var(--bg-card);
+  transition: border-color 0.3s ease;
+}
+.info-card:hover { border-color: var(--gold); }
+
+/* ── BOOKING CARD ────────────────────────────────────────────── */
+.booking-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-gold);
+  color: #fff;
+  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.booking-input:focus { border-color: var(--gold); }
+.booking-input option { background: #111; color: #fff; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .room-detail-grid { grid-template-columns: 1fr !important; }
+  .contact-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+  .desktop-nav { display: none !important; }
+  .mobile-menu-btn { display: flex !important; }
+  .gallery-featured { grid-column: auto !important; }
+  .about-grid { grid-template-columns: 1fr !important; }
+}
+@media (min-width: 769px) {
+  .mobile-menu { display: none !important; }
+}
+@media (max-width: 480px) {
+  .contact-name-grid { grid-template-columns: 1fr !important; }
+}
