@@ -6,7 +6,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function ParallaxMask() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<SVGGElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,27 +18,26 @@ export default function ParallaxMask() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=200%", // Pin for 200% of viewport height
-        scrub: 1,      // Smooth scrubbing
-        pin: true,     // This pins the section while zooming
+        end: "+=200%",
+        scrub: 1.2,
+        pin: true,
       }
     });
 
     tl.to(textRef.current, {
-      scale: 80, // Massive scale to ensure we zoom completely through the letter hole
+      scale: 80,
       opacity: 0,
-      ease: "power2.in",
+      ease: "power2.inOut",
     });
 
-    // We can also scale the background up slightly as we zoom in
     gsap.to(bgRef.current, {
-      scale: 1.1,
+      scale: 1.15,
       ease: "none",
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
         end: "+=200%",
-        scrub: 1,
+        scrub: 1.2,
       }
     });
 
@@ -76,7 +75,8 @@ export default function ParallaxMask() {
             backgroundImage: "url('/hotel_ballroom.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            zIndex: 0
+            zIndex: 0,
+            filter: "brightness(0.95)"
           }}
         />
 

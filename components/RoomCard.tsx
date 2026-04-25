@@ -1,22 +1,40 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Room } from "@/lib/data";
+import { motion } from "framer-motion";
 
 export default function RoomCard({ room }: { room: Room }) {
   return (
-    <div className="room-card group">
+    <motion.div
+      className="room-card group"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Image */}
       <div className="room-img" style={{ position: "relative", height: "300px", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, transition: "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)" }} className="group-hover:scale-110">
+        <motion.div
+          style={{ position: "absolute", inset: 0 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
+        >
           <Image src={room.image} alt={room.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} />
-        </div>
+        </motion.div>
 
         {/* Dark gradient */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)" }} />
 
         {/* Badge */}
         {room.badge && (
-          <span
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             style={{
               position: "absolute",
               top: "1rem",
@@ -33,11 +51,15 @@ export default function RoomCard({ room }: { room: Room }) {
             }}
           >
             {room.badge}
-          </span>
+          </motion.span>
         )}
 
         {/* Price overlay */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           style={{
             position: "absolute",
             bottom: "1rem",
@@ -51,16 +73,26 @@ export default function RoomCard({ room }: { room: Room }) {
           <div style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.55rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>
             per night
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Content */}
       <div style={{ padding: "1.75rem", flex: 1, display: "flex", flexDirection: "column" }}>
 
         {/* Thin gold rule */}
-        <div style={{ width: "32px", height: "1px", background: "#c49b5b", marginBottom: "1rem", opacity: 0.6 }} />
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          style={{ width: "32px", height: "1px", background: "#c49b5b", marginBottom: "1rem", opacity: 0.6, transformOrigin: "left" }}
+        />
 
-        <h3
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           style={{
             fontFamily: "'Cormorant Garamond',serif",
             fontSize: "1.4rem",
@@ -71,14 +103,24 @@ export default function RoomCard({ room }: { room: Room }) {
           }}
         >
           {room.name}
-        </h3>
+        </motion.h3>
 
-        <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", lineHeight: "1.8", marginBottom: "1.5rem", flex: 1, fontWeight: 300 }}>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", lineHeight: "1.8", marginBottom: "1.5rem", flex: 1, fontWeight: 300 }}
+        >
           {room.description}
-        </p>
+        </motion.p>
 
         {/* Room meta */}
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           style={{
             display: "flex",
             gap: "1.25rem",
@@ -98,12 +140,17 @@ export default function RoomCard({ room }: { room: Room }) {
               <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.68rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.06em" }}>{d.label}</span>
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        <Link href={`/rooms/${room.slug}`} className="btn-gold" style={{ textAlign: "center", display: "block" }}>
-          View Details
-        </Link>
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Link href={`/rooms/${room.slug}`} className="btn-gold" style={{ textAlign: "center", display: "block" }}>
+            View Details
+          </Link>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -20,7 +20,7 @@ export default function RoomsClient() {
   } else if (sortOrder === "Price: High to Low") {
     filteredRooms = [...filteredRooms].sort((a, b) => b.pricePerNight - a.pricePerNight);
   } else if (sortOrder === "Room Size") {
-    filteredRooms = [...filteredRooms].sort((a, b) => parseInt(b.size) - parseInt(a.size));
+    filteredRooms = [...filteredRooms].sort((a, b) => b.size - a.size);
   }
 
   return (

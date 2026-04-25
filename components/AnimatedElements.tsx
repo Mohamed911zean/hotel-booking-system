@@ -1,61 +1,68 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 const ease = [0.22, 1, 0.36, 1];
 
-/* ── FadeUp ──────────────────────────────────────────────── */
-interface FadeUpProps extends HTMLMotionProps<"div"> {
+/* ── Fade Up ─────────────────────────────────────────────── */
+interface FadeUpProps {
+  children: React.ReactNode;
   delay?: number;
-  duration?: number;
   distance?: number;
+  duration?: number;
+  className?: string;
+  style?: React.CSSProperties;
 }
-export function FadeUp({ children, delay = 0, duration = 0.75, distance = 40, ...props }: FadeUpProps) {
+
+export function FadeUp({ children, delay = 0, distance = 40, duration = 0.8, className, style }: FadeUpProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: distance }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration, delay, ease }}
-      {...props}
+      transition={{ duration, delay, ease: ease as any }}
+      className={className}
+      style={style}
     >
       {children}
     </motion.div>
   );
 }
 
-/* ── FadeIn ──────────────────────────────────────────────── */
-export function FadeIn({ children, delay = 0, duration = 0.75, ...props }: Omit<FadeUpProps, "distance">) {
+/* ── Fade In ─────────────────────────────────────────────── */
+export function FadeIn({ children, delay = 0, duration = 0.8, className, style }: Omit<FadeUpProps, "distance">) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration, delay, ease }}
-      {...props}
+      transition={{ duration, delay, ease: ease as any }}
+      className={className}
+      style={style}
     >
       {children}
     </motion.div>
   );
 }
 
-/* ── SlideIn ─────────────────────────────────────────────── */
-interface SlideInProps extends HTMLMotionProps<"div"> {
+/* ── Slide In ─────────────────────────────────────────────── */
+interface SlideInProps extends Omit<FadeUpProps, "distance"> {
   direction?: "left" | "right";
-  delay?: number;
-  duration?: number;
 }
-export function SlideIn({ children, direction = "left", delay = 0, duration = 0.85, ...props }: SlideInProps) {
+
+export function SlideIn({ children, direction = "left", delay = 0, duration = 0.85, className, style, ...props }: SlideInProps) {
   const x = direction === "left" ? -60 : 60;
   return (
     <motion.div
       initial={{ opacity: 0, x }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration, delay, ease }}
+      transition={{ duration, delay, ease: ease as any }}
+      className={className}
+      style={style}
       {...props}
     >
       {children}
@@ -63,15 +70,32 @@ export function SlideIn({ children, direction = "left", delay = 0, duration = 0.
   );
 }
 
-/* ── ScaleIn ─────────────────────────────────────────────── */
-export function ScaleIn({ children, delay = 0, duration = 0.7, ...props }: Omit<FadeUpProps, "distance">) {
+/* ── Scale In ─────────────────────────────────────────────── */
+export function ScaleIn({ children, delay = 0, duration = 0.7, className, style }: Omit<FadeUpProps, "distance">) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.92 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration, delay, ease }}
-      {...props}
+      transition={{ duration, delay, ease: ease as any }}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ── Rotate In ─────────────────────────────────────────────── */
+export function RotateIn({ children, delay = 0, duration = 0.8, className, style }: Omit<FadeUpProps, "distance">) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, rotate: -10 }}
+      whileInView={{ opacity: 1, rotate: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration, delay, ease: ease as any }}
+      className={className}
+      style={style}
     >
       {children}
     </motion.div>
@@ -86,6 +110,7 @@ interface StaggerProps {
   className?: string;
   style?: React.CSSProperties;
 }
+
 export function StaggerContainer({ children, stagger = 0.1, delay = 0, className, style }: StaggerProps) {
   return (
     <motion.div
@@ -110,7 +135,7 @@ export function StaggerChild({ children, className, style }: { children: React.R
     <motion.div
       variants={{
         hidden: { opacity: 0, y: 36 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease } },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: ease as any } },
       }}
       className={className}
       style={style}
@@ -127,7 +152,7 @@ export function GoldLineReveal({ delay = 0 }: { delay?: number }) {
       initial={{ scaleX: 0, originX: 0 }}
       whileInView={{ scaleX: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.8, delay, ease }}
+      transition={{ duration: 0.8, delay, ease: ease as any }}
       style={{
         height: "1px",
         background: "#c49b5b",
@@ -159,7 +184,7 @@ export function SplitTextReveal({ text, delay = 0, style, className }: { text: s
           <motion.span
             variants={{
               hidden: { y: "110%", opacity: 0 },
-              visible: { y: "0%", opacity: 1, transition: { duration: 0.8, ease } },
+              visible: { y: "0%", opacity: 1, transition: { duration: 0.8, ease: ease as any } },
             }}
             style={{ display: "inline-block" }}
           >
@@ -174,7 +199,6 @@ export function SplitTextReveal({ text, delay = 0, style, className }: { text: s
 /* ── Highlight Text (Scroll Scrub) ───────────────────────── */
 export function HighlightText({ text, style, highlightColor = "#ffffff", baseColor = "rgba(255,255,255,0.2)" }: { text: string; style?: React.CSSProperties; highlightColor?: string; baseColor?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     if (!containerRef.current) return;
@@ -196,10 +220,8 @@ export function HighlightText({ text, style, highlightColor = "#ffffff", baseCol
         },
       }
     );
-
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, [baseColor, highlightColor]);
-
   return (
     <div ref={containerRef} style={{ display: "flex", flexWrap: "wrap", ...style }}>
       {text.split(" ").map((word, wordIndex) => (
@@ -215,3 +237,120 @@ export function HighlightText({ text, style, highlightColor = "#ffffff", baseCol
   );
 }
 
+/* ── Parallax Scroll ─────────────────────────────────────── */
+export function ParallaxScroll({ children, speed = 0.5, className, style }: { children: React.ReactNode; speed?: number; className?: string; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (!ref.current) return;
+
+    gsap.to(ref.current, {
+      y: `${50 * speed}%`,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, [speed]);
+
+  return (
+    <div ref={ref} className={className} style={style}>
+      {children}
+    </div>
+  );
+}
+
+/* ── Blur Reveal on Scroll ───────────────────────────────── */
+export function BlurReveal({ children, delay = 0, className, style }: Omit<FadeUpProps, "distance">) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.9, delay, ease: ease as any }}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ── Number Counter ──────────────────────────────────────── */
+export function NumberCounter({ 
+  from = 0, 
+  to = 100, 
+  duration = 2.5, 
+  delay = 0,
+  suffix = "",
+  className,
+  style
+}: { 
+  from?: number; 
+  to?: number; 
+  duration?: number; 
+  delay?: number;
+  suffix?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const obj = { value: from };
+    gsap.to(obj, {
+      value: to,
+      duration,
+      delay,
+      ease: "power2.out",
+      onUpdate() {
+        if (ref.current) {
+          ref.current.textContent = Math.floor(obj.value) + suffix;
+        }
+      },
+    });
+  }, [from, to, duration, delay, suffix]);
+
+  return <span ref={ref} className={className} style={style}>0{suffix}</span>;
+}
+
+/* ── Floating Animation ──────────────────────────────────── */
+export function FloatingElement({ children, delay = 0, duration = 3, className, style }: Omit<FadeUpProps, "distance">) {
+  return (
+    <motion.div
+      animate={{ y: [0, -15, 0] }}
+      transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
+      className={className}
+      style={style}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ── Shimmer Effect ──────────────────────────────────────── */
+export function ShimmerEffect({ children, className, style }: { children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+  return (
+    <motion.div
+      initial={{ backgroundPosition: "200% center" }}
+      animate={{ backgroundPosition: "-200% center" }}
+      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+      className={className}
+      style={{
+        backgroundImage: "linear-gradient(90deg, transparent 0%, rgba(196,155,91,0.2) 50%, transparent 100%)",
+        backgroundSize: "200% 100%",
+        ...style
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}

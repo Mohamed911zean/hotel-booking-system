@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-const ease = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const stats = [
   { value: 150, suffix: "+", label: "Luxury Rooms" },
@@ -46,7 +46,7 @@ export default function HeroSection() {
       gsap.to(obj, {
         val: stat.value,
         duration: 2.2,
-        delay: 1.5, // Start after main text animations
+        delay: 1.5,
         ease: "power2.out",
         onUpdate() {
           if (el) {
@@ -68,7 +68,7 @@ export default function HeroSection() {
   };
   const item = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: ease as any } },
   };
 
   return (
@@ -106,9 +106,9 @@ export default function HeroSection() {
 
         {/* Ornament line */}
         <motion.div variants={item} style={{ display: "flex", alignItems: "center", gap: "0.75rem", justifyContent: "center", margin: "0.75rem 0" }}>
-          <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.7, ease }} style={{ display: "block", width: "40px", height: "1px", background: "#c49b5b", opacity: 0.6, transformOrigin: "left" }} />
+          <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.7, ease: ease as any }} style={{ display: "block", width: "40px", height: "1px", background: "#c49b5b", opacity: 0.6, transformOrigin: "left" }} />
           <span style={{ color: "#c49b5b", fontSize: "0.55rem", opacity: 0.7 }}>✦</span>
-          <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.7, ease }} style={{ display: "block", width: "40px", height: "1px", background: "#c49b5b", opacity: 0.6, transformOrigin: "right" }} />
+          <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.9, duration: 0.7, ease: ease as any }} style={{ display: "block", width: "40px", height: "1px", background: "#c49b5b", opacity: 0.6, transformOrigin: "right" }} />
         </motion.div>
 
         <motion.p variants={item} style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "clamp(0.75rem, 1.5vw, 0.85rem)", color: "rgba(255,255,255,0.75)", lineHeight: 1.9, marginBottom: "2.5rem", maxWidth: "520px", margin: "0 auto 2.5rem", fontWeight: 300, letterSpacing: "0.05em" }}>
@@ -125,7 +125,7 @@ export default function HeroSection() {
       <motion.div
         initial={{ y: 60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.8, ease }}
+        transition={{ delay: 1.1, duration: 0.8, ease: ease as any }}
         style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 2, backgroundColor: "rgba(8,8,8,0.88)", backdropFilter: "blur(12px)", borderTop: "1px solid rgba(196,155,91,0.2)" }}
       >
         <div style={{ maxWidth: "1320px", margin: "0 auto", padding: "1.5rem 2rem", display: "flex", justifyContent: "space-around", flexWrap: "wrap", gap: "1rem" }}>

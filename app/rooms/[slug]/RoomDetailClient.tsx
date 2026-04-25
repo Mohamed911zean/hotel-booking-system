@@ -7,7 +7,7 @@ import { notFound, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import RoomGallerySwiper from "@/components/RoomGallerySwiper";
 
-const ease = [0.22, 1, 0.36, 1];
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function RoomDetailClient() {
   const params = useParams();
@@ -75,7 +75,7 @@ export default function RoomDetailClient() {
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.85, ease }}
+              transition={{ duration: 0.85, ease: ease as any }}
             >
               {/* Swiper Gallery */}
               <RoomGallerySwiper gallery={room.gallery} name={room.name} badge={room.badge} />
