@@ -14,6 +14,9 @@ export default function RoomDetailClient() {
   const slug = params?.slug as string;
   const room = rooms.find((r) => r.slug === slug);
 
+  // Get local date string for min date (YYYY-MM-DD)
+  const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(1);
@@ -152,11 +155,11 @@ export default function RoomDetailClient() {
                 <form onSubmit={handleSubmit} style={{ padding: "1.75rem", display: "flex", flexDirection: "column", gap: "1.1rem" }}>
                   <div>
                     <label style={labelStyle}>Check-in Date</label>
-                    <input type="date" required min={new Date().toISOString().split("T")[0]} value={checkIn} onChange={e => setCheckIn(e.target.value)} className="booking-input" />
+                    <input type="date" required min={today} value={checkIn} onChange={e => { setCheckIn(e.target.value); if (checkOut && e.target.value >= checkOut) setCheckOut(""); }} className="booking-input" />
                   </div>
                   <div>
                     <label style={labelStyle}>Check-out Date</label>
-                    <input type="date" required min={checkIn || new Date().toISOString().split("T")[0]} value={checkOut} onChange={e => setCheckOut(e.target.value)} className="booking-input" />
+                    <input type="date" required min={checkIn ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split("T")[0] : today} value={checkOut} onChange={e => setCheckOut(e.target.value)} className="booking-input" />
                   </div>
                   <div>
                     <label style={labelStyle}>Guests</label>
@@ -192,7 +195,7 @@ export default function RoomDetailClient() {
                     </motion.div>
                   )}
 
-                  <button type="submit" disabled={submitting} className="btn-gold-filled" style={{ width: "100%", border: "none", fontFamily: "'Montserrat',sans-serif", opacity: submitting ? 0.6 : 1 }}>
+                  <button type="submit" disabled={submitting || !checkIn || !checkOut || nights <= 0} className="btn-gold-filled" style={{ width: "100%", border: "none", fontFamily: "'Montserrat',sans-serif", opacity: (submitting || !checkIn || !checkOut || nights <= 0) ? 0.5 : 1, cursor: (submitting || !checkIn || !checkOut || nights <= 0) ? "not-allowed" : "pointer" }}>
                     {submitting ? "Processing..." : "Confirm Reservation"}
                   </button>
                   <p style={{ fontFamily: "'Montserrat',sans-serif", textAlign: "center", fontSize: "0.62rem", color: "rgba(255,255,255,0.25)", letterSpacing: "0.08em" }}>

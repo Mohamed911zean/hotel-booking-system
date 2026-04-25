@@ -7,7 +7,18 @@ import HeroSection from "@/components/HeroSection";
 import MarqueeStrip from "@/components/MarqueeStrip";
 import GallerySwiper from "@/components/GallerySwiper";
 import TestimonialsSwiper from "@/components/TestimonialsSwiper";
-import { FadeUp, FadeIn, SlideIn, StaggerContainer, StaggerChild, GoldLineReveal } from "@/components/AnimatedElements";
+import ParallaxMask from "@/components/ParallaxMask";
+import AmenitiesAccordion from "@/components/AmenitiesAccordion";
+import { 
+  FadeUp, 
+  FadeIn, 
+  SlideIn, 
+  StaggerContainer, 
+  StaggerChild, 
+  GoldLineReveal,
+  SplitTextReveal,
+  HighlightText
+} from "@/components/AnimatedElements";
 
 export const metadata: Metadata = {
   title: "Royal Palace Hotel — Manhattan's Premier Luxury Hotel",
@@ -35,16 +46,39 @@ export default function HomePage() {
       {/* ── MARQUEE ──────────────────── */}
       <MarqueeStrip />
 
+      {/* ── MASSIVE PARALLAX MASK ────── */}
+      <ParallaxMask />
+
+      {/* ── INTRO / HIGHLIGHT TEXT ───── */}
+      <section style={{ padding: "8rem 2rem", backgroundColor: "#0a0a0a", textAlign: "center" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+          <FadeUp>
+            <span className="gold-label">The Vision</span>
+            <Ornament />
+          </FadeUp>
+          <div style={{ marginTop: "2rem", fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", lineHeight: 1.2, fontWeight: 300 }}>
+            <HighlightText 
+              text="This isn’t just about luxury. It’s about identity. Progress. Getting unstuck. You’re not just looking for a place to stay. You’re looking for alignment. That’s what we help you find."
+              highlightColor="#c49b5b"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURED ROOMS ───────────── */}
-      <section id="featured-rooms" style={{ padding: "7rem 2rem", backgroundColor: "#0a0a0a" }}>
+      <section id="featured-rooms" style={{ padding: "7rem 2rem", backgroundColor: "#080808" }}>
         <div style={{ maxWidth: "1320px", margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <FadeUp>
               <span className="gold-label">Accommodations</span>
               <Ornament />
-              <h2 className="section-title" style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300, marginBottom: "1.5rem" }}>
-                Featured Rooms &amp; <em style={{ color: "#c49b5b" }}>Suites</em>
-              </h2>
+            </FadeUp>
+            <SplitTextReveal 
+              text="Featured Rooms & Suites" 
+              className="section-title"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300, marginBottom: "1.5rem" }}
+            />
+            <FadeUp delay={0.2}>
               <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.82rem", color: "rgba(255,255,255,0.45)", maxWidth: "460px", margin: "0 auto", lineHeight: "1.9", fontWeight: 300 }}>
                 Thoughtfully designed sanctuaries balancing comfort, elegance, and every modern amenity.
               </p>
@@ -88,13 +122,20 @@ export default function HomePage() {
           </SlideIn>
 
           {/* Text */}
-          <SlideIn direction="right" delay={0.1}>
-            <div>
+          <div style={{ overflow: "hidden" }}>
+            <FadeUp>
               <span className="gold-label">Our Story</span>
               <GoldLineReveal delay={0.2} />
-              <h2 className="section-title" style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, marginBottom: "1.75rem", lineHeight: 1.2 }}>
-                A Legacy of<br /><em style={{ color: "#c49b5b" }}>Refinement</em> Since 1998
-              </h2>
+            </FadeUp>
+            
+            <SplitTextReveal 
+              text="A Legacy of Refinement Since 1998" 
+              delay={0.1}
+              className="section-title"
+              style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 300, marginBottom: "1.75rem", lineHeight: 1.2 }}
+            />
+
+            <SlideIn direction="right" delay={0.2}>
               <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.84rem", color: "rgba(255,255,255,0.5)", lineHeight: "1.9", marginBottom: "1.25rem", fontWeight: 300 }}>
                 Nestled at the heart of Manhattan, Royal Palace Hotel has welcomed distinguished guests for over two decades. Our commitment to excellence is reflected in every detail.
               </p>
@@ -110,50 +151,46 @@ export default function HomePage() {
                 ))}
               </div>
               <Link href="/rooms" className="btn-gold" id="about-book">Book Your Stay</Link>
-            </div>
-          </SlideIn>
+            </SlideIn>
+          </div>
         </div>
       </section>
 
       {/* ── AMENITIES ────────────────── */}
       <section id="amenities" style={{ padding: "7rem 2rem", backgroundColor: "#080808" }}>
         <div style={{ maxWidth: "1320px", margin: "0 auto" }}>
-          <FadeUp style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <span className="gold-label">World-Class Facilities</span>
-            <Ornament />
-            <h2 className="section-title" style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300 }}>
-              Hotel <em style={{ color: "#c49b5b" }}>Amenities</em>
-            </h2>
-          </FadeUp>
+          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+            <FadeUp>
+              <span className="gold-label">World-Class Facilities</span>
+              <Ornament />
+            </FadeUp>
+            <SplitTextReveal 
+              text="Hotel Amenities"
+              className="section-title"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300 }}
+            />
+          </div>
 
-          <StaggerContainer
-            stagger={0.07}
-            delay={0.1}
-            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px,1fr))", gap: "1px", background: "rgba(196,155,91,0.1)" }}
-          >
-            {amenities.map((amenity) => (
-              <StaggerChild key={amenity.title}>
-                <div className="amenity-card">
-                  <div style={{ fontSize: "1.75rem", marginBottom: "1.25rem" }}>{amenity.icon}</div>
-                  <h3 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.15rem", fontWeight: 600, color: "#fff", marginBottom: "0.625rem" }}>{amenity.title}</h3>
-                  <p style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", lineHeight: "1.75", fontWeight: 300 }}>{amenity.description}</p>
-                </div>
-              </StaggerChild>
-            ))}
-          </StaggerContainer>
+          <FadeIn delay={0.2}>
+            <AmenitiesAccordion />
+          </FadeIn>
         </div>
       </section>
 
       {/* ── GALLERY SWIPER ───────────── */}
       <section id="gallery-preview" style={{ padding: "7rem 2rem", backgroundColor: "#0a0a0a" }}>
         <div style={{ maxWidth: "1320px", margin: "0 auto" }}>
-          <FadeUp style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <span className="gold-label">Photo Gallery</span>
-            <Ornament />
-            <h2 className="section-title" style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 300 }}>
-              Explore the <em style={{ color: "#c49b5b" }}>Hotel</em>
-            </h2>
-          </FadeUp>
+          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+            <FadeUp>
+              <span className="gold-label">Photo Gallery</span>
+              <Ornament />
+            </FadeUp>
+            <SplitTextReveal 
+              text="Explore the Hotel"
+              className="section-title"
+              style={{ fontSize: "clamp(2rem, 3.5vw, 2.75rem)", fontWeight: 300 }}
+            />
+          </div>
           <FadeIn delay={0.2}>
             <GallerySwiper />
           </FadeIn>
@@ -163,13 +200,17 @@ export default function HomePage() {
       {/* ── TESTIMONIALS SWIPER ──────── */}
       <section id="testimonials" style={{ padding: "7rem 2rem", backgroundColor: "#0d0d0d" }}>
         <div style={{ maxWidth: "1320px", margin: "0 auto" }}>
-          <FadeUp style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <span className="gold-label">Guest Reviews</span>
-            <Ornament />
-            <h2 className="section-title" style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300 }}>
-              What Our <em style={{ color: "#c49b5b" }}>Guests</em> Say
-            </h2>
-          </FadeUp>
+          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+            <FadeUp>
+              <span className="gold-label">Guest Reviews</span>
+              <Ornament />
+            </FadeUp>
+            <SplitTextReveal 
+              text="What Our Guests Say"
+              className="section-title"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", fontWeight: 300 }}
+            />
+          </div>
           <FadeIn delay={0.2}>
             <TestimonialsSwiper />
           </FadeIn>

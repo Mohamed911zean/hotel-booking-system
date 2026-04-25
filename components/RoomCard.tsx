@@ -4,13 +4,15 @@ import { Room } from "@/lib/data";
 
 export default function RoomCard({ room }: { room: Room }) {
   return (
-    <div className="room-card">
+    <div className="room-card group">
       {/* Image */}
-      <div className="room-img" style={{ position: "relative", height: "240px", overflow: "hidden" }}>
-        <Image src={room.image} alt={room.name} fill style={{ objectFit: "cover" }} />
+      <div className="room-img" style={{ position: "relative", height: "300px", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, transition: "transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)" }} className="group-hover:scale-110">
+          <Image src={room.image} alt={room.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{ objectFit: "cover" }} />
+        </div>
 
         {/* Dark gradient */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)" }} />
 
         {/* Badge */}
         {room.badge && (

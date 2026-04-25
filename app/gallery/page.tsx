@@ -39,6 +39,17 @@ export default function GalleryPage() {
   const prev = () => setSelected((s) => s !== null ? (s - 1 + galleryImages.length) % galleryImages.length : null);
   const next = () => setSelected((s) => s !== null ? (s + 1) % galleryImages.length : null);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selected === null) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selected]);
+
   return (
     <>
       {/* Header */}

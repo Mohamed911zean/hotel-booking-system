@@ -52,18 +52,17 @@ export default function TestimonialsSwiper() {
 
       <Swiper
         className="testi-swiper"
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Navigation, Pagination, Autoplay, EffectCards]}
+        effect="cards"
+        grabCursor={true}
         navigation={{ prevEl: ".t-prev", nextEl: ".t-next" }}
         pagination={{ clickable: true, el: ".testi-dots" }}
         autoplay={{ delay: 5500, disableOnInteraction: false }}
-        slidesPerView={1}
-        spaceBetween={24}
-        breakpoints={{ 768: { slidesPerView: 2 } }}
         loop
-        style={{ paddingBottom: "3rem" }}
+        style={{ paddingBottom: "3rem", maxWidth: "420px", height: "auto", overflow: "visible" }}
       >
         {testimonials.map((t) => (
-          <SwiperSlide key={t.name}>
+          <SwiperSlide key={t.name} style={{ borderRadius: "16px", overflow: "hidden" }}>
             <div style={{ padding: "2.25rem 2rem", background: "#0d0d0d", border: "1px solid rgba(196,155,91,0.15)", height: "100%", display: "flex", flexDirection: "column" }}>
               <div style={{ color: "#c49b5b", fontSize: "0.85rem", marginBottom: "1.25rem", letterSpacing: "0.08em" }}>{"★".repeat(t.rating)}</div>
               <p style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "1.15rem", fontStyle: "italic", fontWeight: 400, color: "rgba(255,255,255,0.75)", lineHeight: "1.75", marginBottom: "1.75rem", flex: 1 }}>

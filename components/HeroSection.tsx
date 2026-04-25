@@ -38,16 +38,16 @@ export default function HeroSection() {
       });
     }
 
-    // Counter animation
+    // Counter animation - run immediately on mount since they are in the hero
     counterRefs.current.forEach((el, i) => {
       if (!el) return;
       const stat = stats[i];
       const obj = { val: 0 };
       gsap.to(obj, {
         val: stat.value,
-        duration: 1.8,
+        duration: 2.2,
+        delay: 1.5, // Start after main text animations
         ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 90%", once: true },
         onUpdate() {
           if (el) {
             el.textContent =

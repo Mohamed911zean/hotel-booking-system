@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion, HTMLMotionProps } from "framer-motion";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -135,3 +138,80 @@ export function GoldLineReveal({ delay = 0 }: { delay?: number }) {
     />
   );
 }
+
+/* ── Split Text Reveal ───────────────────────────────────── */
+export function SplitTextReveal({ text, delay = 0, style, className }: { text: string; delay?: number; style?: React.CSSProperties; className?: string }) {
+  const words = text.split(" ");
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.08, delayChildren: delay } },
+      }}
+      className={className}
+      style={{ display: "inline-flex", flexWrap: "wrap", ...style }}
+    >
+      {words.map((word, i) => (
+        <span key={i} style={{ overflow: "hidden", display: "inline-block", marginRight: "0.25em" }}>
+          <motion.span
+            variants={{
+              hidden: { y: "110%", opacity: 0 },
+              visible: { y: "0%", opacity: 1, transition: { duration: 0.8, ease } },
+            }}
+            style={{ display: "inline-block" }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </motion.div>
+  );
+}
+
+/* ── Highlight Text (Scroll Scrub) ───────────────────────── */
+export function HighlightText({ text, style, highlightColor = "#ffffff", baseColor = "rgba(255,255,255,0.2)" }: { text: string; style?: React.CSSProperties; highlightColor?: string; baseColor?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (!containerRef.current) return;
+    
+    const chars = containerRef.current.querySelectorAll(".h-char");
+    
+    gsap.fromTo(
+      chars,
+      { color: baseColor },
+      {
+        color: highlightColor,
+        stagger: 0.1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          end: "bottom 50%",
+          scrub: true,
+        },
+      }
+    );
+
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, [baseColor, highlightColor]);
+
+  return (
+    <div ref={containerRef} style={{ display: "flex", flexWrap: "wrap", ...style }}>
+      {text.split(" ").map((word, wordIndex) => (
+        <div key={wordIndex} style={{ display: "inline-flex", marginRight: "0.25em" }}>
+          {word.split("").map((char, charIndex) => (
+            <span key={charIndex} className="h-char" style={{ color: baseColor }}>
+              {char}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
